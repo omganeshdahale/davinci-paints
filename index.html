@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<title>da Vinci Paints</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<input id="check" type="checkbox" name="check">
+	<img id="ham" src="img/arrow.png">
+	<nav>
+		<template id="color-btn">
+			<div class="color"><div></div></div>
+		</template>
+		
+		<div id="download">Save</div>
+		<div id="clear">Clear</div>
+
+		<img id="brush" class="tool shape" src="img/brush.png"></img>
+		<img id="bucket" class="tool shape" src="img/bucket.png"></img>
+
+		<div id="line" class="shape"><div></div></div>
+		<div id="ellipse" class="shape"><div></div></div>
+		<div id="rect" class="shape"><div></div></div>
+		
+		<div id="container"></div>
+		
+		<input id="brush-size" type="range" min="1" max="50" value="10">
+	</nav>
+
+	<canvas id="canvas"></canvas>
+
+</body>
+<script type="text/javascript" src="app.js"></script>
+</html>
