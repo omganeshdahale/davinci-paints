@@ -120,12 +120,17 @@ hr {
 	height: 1px;
 	margin-bottom: 20px;
 }
+#picker {
+	display: inline-block;
+	margin-top: 15px;
+}
 #container {
 	width: 100%;
 	box-sizing: border-box;
 	padding: 20px 5px;
 	background: #eaeaea;
 	margin: 20px 0;
+	margin-top: 0;
 	text-align: left;
 }
 #check {
