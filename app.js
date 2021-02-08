@@ -27,6 +27,12 @@ window.onload = () => {
 		ham = document.querySelector("#ham");
 	}
 
+	// adding color picker
+	let picker = document.querySelector("#picker");
+	let colorPicker = new iro.ColorPicker(picker, {layoutDirection:"horizontal"});
+	colorPicker.display = "inline-block";
+	colorPicker.resize(200);
+
 	let container = document.querySelector("#container");
 	const colorBtn = document.querySelector("#color-btn");
 	let activeColor;
@@ -34,19 +40,43 @@ window.onload = () => {
 	// adding color pallete to nav
 	for (let color of COLORS) {
 		let btn = colorBtn.content.cloneNode(true); // document fragment holding button
-		let realBtn = btn.children[0] // real button
+		let realBtn = btn.children[0]; // real button
 		realBtn.children[0].style.background = color;
 		realBtn.onclick = () => {
 			c.strokeStyle = color;
-			activeColor.classList.remove("active-color");
+			if (activeColor) {activeColor.classList.remove("active-color");}
 			activeColor = realBtn;
 			activeColor.classList.add("active-color");
 		}
-		if (color === "black") {activeColor = realBtn;} // default color black
+		if (color === "#000000") {activeColor = realBtn;} // default color black
 		container.append(btn);
 	}
 	activeColor.click();
 
+	colorPicker.on("color:change", color => {
+		if (activeColor) {activeColor.classList.remove("active-color");}
+		activeColor = null;
+		c.strokeStyle = color.hexString;
+	});
+
+	let add = document.querySelector("#add");
+	add.onclick = () => {
+		let color = colorPicker.color.hexString;
+		if (!COLORS.includes(color)) {
+			let btn = colorBtn.content.cloneNode(true); // document fragment holding button
+			let realBtn = btn.children[0]; // real button
+			realBtn.children[0].style.background = color;
+			realBtn.onclick = () => {
+				c.strokeStyle = color;
+				if (activeColor) {activeColor.classList.remove("active-color");}
+				activeColor = realBtn;
+				activeColor.classList.add("active-color");
+			}
+			realBtn.click();
+			container.append(btn);
+			COLORS.push(color);
+		}
+	}
 
 	// setting shape controls up
 	let btnRect = document.querySelector("#rect");
