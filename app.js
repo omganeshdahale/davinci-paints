@@ -1,5 +1,5 @@
-const COLORS = ["white", "black", "red", "blue", "green", 
-				"cyan", "yellow", "magenta",]; // default color pallete
+const COLORS = ["#ffffff", "#000000", "#ff0000", "#0000ff", "#00ff00", 
+				"#00ffff", "#ffff00", "#ff00ff",]; // default color pallete
 let changes = []; // list to store changes for undo redo operations
 let changeIndex = 0; // current state in changes represented by index
 
