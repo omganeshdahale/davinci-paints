@@ -86,8 +86,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
-				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
-				changeIndex++;
+				storeChanges();
 			}
 		}
 	}
@@ -117,8 +116,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
-				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
-				changeIndex++;
+				storeChanges();
 			}
 		}
 	}
@@ -154,8 +152,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
-				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
-				changeIndex++;
+				storeChanges();
 			}
 		}
 	}
@@ -184,8 +181,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
-				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
-				changeIndex++;
+				storeChanges();
 			}
 		}
 	}
@@ -207,8 +203,7 @@ window.onload = () => {
 		c.rect(0, 0, canvas.width, canvas.height);
 		c.fill();
 		c.restore();
-		changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
-		changeIndex++;
+		storeChanges();
 	}
 
 	let btnFill = document.querySelector("#bucket");
@@ -290,8 +285,7 @@ window.onload = () => {
 			}
 
 			c.putImageData(imgData, 0, 0);
-			changes.push(imgData);
-			changeIndex++;
+			storeChanges();
 		}
 	}
 
@@ -324,6 +318,15 @@ window.onload = () => {
 		if (changeIndex < changes.length-1) {
 			c.putImageData(changes[++changeIndex], 0, 0);
 		}
+	}
+
+	function storeChanges() {
+		if (changeIndex !== changes.length-1) {
+			changes.splice(changeIndex+1, changes.length-changeIndex+1);
+		}
+
+		changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+		changeIndex++;		
 	}
 
 }
