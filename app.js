@@ -309,4 +309,13 @@ window.onload = () => {
 		return [r,g,b,a];
 	}
 
+	let undoBtn = document.querySelector("#undo");
+	undoBtn.onclick = undo;
+
+	function undo() {
+		if (changeIndex > 0) {
+			c.putImageData(changes[--changeIndex], 0, 0);
+		}
+	}
+
 }
