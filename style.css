@@ -95,7 +95,7 @@ nav {
 	transform: rotate(-45deg);
 	margin-left: -10px;
 }
-#download, #clear {
+#download, #clear, #add {
 	display: inline-block;
 	box-sizing: border-box;
 	height: 40px;
@@ -113,6 +113,13 @@ nav {
 #clear {
 		margin-bottom: 20px;
 		background: #e53935;
+}
+#add {
+	margin-bottom: 10px;
+	background: #3f51b5;
+}
+#picker {
+	margin-bottom: 10px;
 }
 hr {
 	background: grey;

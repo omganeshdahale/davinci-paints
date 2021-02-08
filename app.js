@@ -1,5 +1,5 @@
-const COLORS = ["white", "black", "red", "blue", "green", 
-				"cyan", "yellow", "magenta",]; // default color pallete
+const COLORS = ["#ffffff", "#000000", "#ff0000", "#0000ff", "#00ff00", 
+				"#00ffff", "#ffff00", "#ff00ff",]; // default color pallete
 
 window.onload = () => {
 	let canvas = document.querySelector("#canvas");
@@ -44,7 +44,7 @@ window.onload = () => {
 			activeColor = realBtn;
 			activeColor.classList.add("active-color");
 		}
-		if (color === "black") {activeColor = realBtn;} // default color black
+		if (color === "#000000") {activeColor = realBtn;} // default color black
 		container.append(btn);
 	}
 	activeColor.click();
@@ -54,6 +54,25 @@ window.onload = () => {
 		activeColor = null;
 		c.strokeStyle = color.hexString;
 	});
+
+	let add = document.querySelector("#add");
+	add.onclick = () => {
+		let color = colorPicker.color.hexString;
+		if (!COLORS.includes(color)) {
+			let btn = colorBtn.content.cloneNode(true); // document fragment holding button
+			let realBtn = btn.children[0]; // real button
+			realBtn.children[0].style.background = color;
+			realBtn.onclick = () => {
+				c.strokeStyle = color;
+				if (activeColor) {activeColor.classList.remove("active-color");}
+				activeColor = realBtn;
+				activeColor.classList.add("active-color");
+			}
+			realBtn.click();
+			container.append(btn);
+			COLORS.push(color);
+		}
+	}
 
 	// setting shape controls up
 	let btnRect = document.querySelector("#rect");
