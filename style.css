@@ -18,6 +18,7 @@ nav {
  	user-select: none;
  	float: left;
  	transition: left 0.3s ease-in;
+ 	overflow-y: auto;
 }
 .color {
 	display: inline-block;
