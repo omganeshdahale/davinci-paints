@@ -1,5 +1,7 @@
 const COLORS = ["white", "black", "red", "blue", "green", 
 				"cyan", "yellow", "magenta",]; // default color pallete
+let changes = []; // list to store changes for undo redo operations
+let changeIndex = 0; // current state in changes represented by index
 
 window.onload = () => {
 	let canvas = document.querySelector("#canvas");
@@ -17,6 +19,8 @@ window.onload = () => {
 	c.restore();
 	c.lineCap = "round";
 	c.lineJoin = "round";
+
+	changes.push(c.getImageData(0,0, canvas.width, canvas.height)); //initial change
 
 	let ham = false;
 	if (window.innerWidth <= 768) {
@@ -82,6 +86,8 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+				changeIndex++;
 			}
 		}
 	}
@@ -111,6 +117,8 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+				changeIndex++;
 			}
 		}
 	}
@@ -146,6 +154,8 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+				changeIndex++;
 			}
 		}
 	}
@@ -174,6 +184,8 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+				changeIndex++;
 			}
 		}
 	}
@@ -195,6 +207,8 @@ window.onload = () => {
 		c.rect(0, 0, canvas.width, canvas.height);
 		c.fill();
 		c.restore();
+		changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+		changeIndex++;
 	}
 
 	let btnFill = document.querySelector("#bucket");
@@ -276,6 +290,8 @@ window.onload = () => {
 			}
 
 			c.putImageData(imgData, 0, 0);
+			changes.push(imgData);
+			changeIndex++;
 		}
 	}
 
