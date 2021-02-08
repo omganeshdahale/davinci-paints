@@ -18,6 +18,7 @@ nav {
  	user-select: none;
  	float: left;
  	transition: left 0.3s ease-in;
+ 	overflow-y: auto;
 }
 .color {
 	display: inline-block;
@@ -95,7 +96,7 @@ nav {
 	transform: rotate(-45deg);
 	margin-left: -10px;
 }
-#download, #clear {
+#download, #clear, #undo, #redo, #add {
 	display: inline-block;
 	box-sizing: border-box;
 	height: 40px;
@@ -111,8 +112,19 @@ nav {
 	cursor: pointer;
 }
 #clear {
-		margin-bottom: 20px;
 		background: #e53935;
+}
+#add {
+	margin-bottom: 10px;
+	background: #3f51b5;
+}
+#picker {
+	margin-bottom: 10px;
+}
+#undo, #redo {
+	width: 44%;
+	margin-bottom: 20px;
+	background: #1976d2;
 }
 hr {
 	background: grey;
@@ -120,12 +132,17 @@ hr {
 	height: 1px;
 	margin-bottom: 20px;
 }
+#picker {
+	display: inline-block;
+	margin-top: 15px;
+}
 #container {
 	width: 100%;
 	box-sizing: border-box;
 	padding: 20px 5px;
 	background: #eaeaea;
 	margin: 20px 0;
+	margin-top: 0;
 	text-align: left;
 }
 #check {

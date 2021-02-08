@@ -1,5 +1,7 @@
-const COLORS = ["white", "black", "red", "blue", "green", 
-				"cyan", "yellow", "magenta",]; // default color pallete
+const COLORS = ["#ffffff", "#000000", "#ff0000", "#0000ff", "#00ff00", 
+				"#00ffff", "#ffff00", "#ff00ff",]; // default color pallete
+let changes = []; // list to store changes for undo redo operations
+let changeIndex = 0; // current state in changes represented by index
 
 window.onload = () => {
 	let canvas = document.querySelector("#canvas");
@@ -18,10 +20,18 @@ window.onload = () => {
 	c.lineCap = "round";
 	c.lineJoin = "round";
 
+	changes.push(c.getImageData(0,0, canvas.width, canvas.height)); //initial change
+
 	let ham = false;
 	if (window.innerWidth <= 768) {
 		ham = document.querySelector("#ham");
 	}
+
+	// adding color picker
+	let picker = document.querySelector("#picker");
+	let colorPicker = new iro.ColorPicker(picker, {layoutDirection:"horizontal"});
+	colorPicker.display = "inline-block";
+	colorPicker.resize(200);
 
 	let container = document.querySelector("#container");
 	const colorBtn = document.querySelector("#color-btn");
@@ -30,19 +40,43 @@ window.onload = () => {
 	// adding color pallete to nav
 	for (let color of COLORS) {
 		let btn = colorBtn.content.cloneNode(true); // document fragment holding button
-		let realBtn = btn.children[0] // real button
+		let realBtn = btn.children[0]; // real button
 		realBtn.children[0].style.background = color;
 		realBtn.onclick = () => {
 			c.strokeStyle = color;
-			activeColor.classList.remove("active-color");
+			if (activeColor) {activeColor.classList.remove("active-color");}
 			activeColor = realBtn;
 			activeColor.classList.add("active-color");
 		}
-		if (color === "black") {activeColor = realBtn;} // default color black
+		if (color === "#000000") {activeColor = realBtn;} // default color black
 		container.append(btn);
 	}
 	activeColor.click();
 
+	colorPicker.on("color:change", color => {
+		if (activeColor) {activeColor.classList.remove("active-color");}
+		activeColor = null;
+		c.strokeStyle = color.hexString;
+	});
+
+	let add = document.querySelector("#add");
+	add.onclick = () => {
+		let color = colorPicker.color.hexString;
+		if (!COLORS.includes(color)) {
+			let btn = colorBtn.content.cloneNode(true); // document fragment holding button
+			let realBtn = btn.children[0]; // real button
+			realBtn.children[0].style.background = color;
+			realBtn.onclick = () => {
+				c.strokeStyle = color;
+				if (activeColor) {activeColor.classList.remove("active-color");}
+				activeColor = realBtn;
+				activeColor.classList.add("active-color");
+			}
+			realBtn.click();
+			container.append(btn);
+			COLORS.push(color);
+		}
+	}
 
 	// setting shape controls up
 	let btnRect = document.querySelector("#rect");
@@ -82,6 +116,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -111,6 +146,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -146,6 +182,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -174,6 +211,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -195,6 +233,7 @@ window.onload = () => {
 		c.rect(0, 0, canvas.width, canvas.height);
 		c.fill();
 		c.restore();
+		storeChanges();
 	}
 
 	let btnFill = document.querySelector("#bucket");
@@ -276,6 +315,7 @@ window.onload = () => {
 			}
 
 			c.putImageData(imgData, 0, 0);
+			storeChanges();
 		}
 	}
 
@@ -291,6 +331,32 @@ window.onload = () => {
 		let a = hex.length === 8 ? parseInt(hex.slice(0,2), 16) : 255;
 
 		return [r,g,b,a];
+	}
+
+	let undoBtn = document.querySelector("#undo");
+	undoBtn.onclick = undo;
+	let redoBtn = document.querySelector("#redo");
+	redoBtn.onclick = redo;
+
+	function undo() {
+		if (changeIndex > 0) {
+			c.putImageData(changes[--changeIndex], 0, 0);
+		}
+	}
+
+	function redo() {
+		if (changeIndex < changes.length-1) {
+			c.putImageData(changes[++changeIndex], 0, 0);
+		}
+	}
+
+	function storeChanges() {
+		if (changeIndex !== changes.length-1) {
+			changes.splice(changeIndex+1, changes.length-changeIndex+1);
+		}
+
+		changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+		changeIndex++;		
 	}
 
 }
