@@ -311,10 +311,18 @@ window.onload = () => {
 
 	let undoBtn = document.querySelector("#undo");
 	undoBtn.onclick = undo;
+	let redoBtn = document.querySelector("#redo");
+	redoBtn.onclick = redo;
 
 	function undo() {
 		if (changeIndex > 0) {
 			c.putImageData(changes[--changeIndex], 0, 0);
+		}
+	}
+
+	function redo() {
+		if (changeIndex < changes.length-1) {
+			c.putImageData(changes[++changeIndex], 0, 0);
 		}
 	}
 
