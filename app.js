@@ -1,5 +1,7 @@
-const COLORS = ["#ffffff", "#000000", "#ff0000", "#0000ff", "#00ff00", 
-				"#00ffff", "#ffff00", "#ff00ff",]; // default color pallete
+const COLORS = ["white", "black", "red", "blue", "green", 
+				"cyan", "yellow", "magenta",]; // default color pallete
+let changes = []; // list to store changes for undo redo operations
+let changeIndex = 0; // current state in changes represented by index
 
 window.onload = () => {
 	let canvas = document.querySelector("#canvas");
@@ -17,6 +19,8 @@ window.onload = () => {
 	c.restore();
 	c.lineCap = "round";
 	c.lineJoin = "round";
+
+	changes.push(c.getImageData(0,0, canvas.width, canvas.height)); //initial change
 
 	let ham = false;
 	if (window.innerWidth <= 768) {
@@ -112,6 +116,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -141,6 +146,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -176,6 +182,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -204,6 +211,7 @@ window.onload = () => {
 			canvas.onpointerup = () => {
 				canvas.onpointerup = canvas.onpointermove = null;
 				if (ham) {ham.classList.remove("remove");}
+				storeChanges();
 			}
 		}
 	}
@@ -225,6 +233,7 @@ window.onload = () => {
 		c.rect(0, 0, canvas.width, canvas.height);
 		c.fill();
 		c.restore();
+		storeChanges();
 	}
 
 	let btnFill = document.querySelector("#bucket");
@@ -306,6 +315,7 @@ window.onload = () => {
 			}
 
 			c.putImageData(imgData, 0, 0);
+			storeChanges();
 		}
 	}
 
@@ -321,6 +331,32 @@ window.onload = () => {
 		let a = hex.length === 8 ? parseInt(hex.slice(0,2), 16) : 255;
 
 		return [r,g,b,a];
+	}
+
+	let undoBtn = document.querySelector("#undo");
+	undoBtn.onclick = undo;
+	let redoBtn = document.querySelector("#redo");
+	redoBtn.onclick = redo;
+
+	function undo() {
+		if (changeIndex > 0) {
+			c.putImageData(changes[--changeIndex], 0, 0);
+		}
+	}
+
+	function redo() {
+		if (changeIndex < changes.length-1) {
+			c.putImageData(changes[++changeIndex], 0, 0);
+		}
+	}
+
+	function storeChanges() {
+		if (changeIndex !== changes.length-1) {
+			changes.splice(changeIndex+1, changes.length-changeIndex+1);
+		}
+
+		changes.push(c.getImageData(0, 0, canvas.width, canvas.height));
+		changeIndex++;		
 	}
 
 }
