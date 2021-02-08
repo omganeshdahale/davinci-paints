@@ -95,7 +95,7 @@ nav {
 	transform: rotate(-45deg);
 	margin-left: -10px;
 }
-#download, #clear {
+#download, #clear, #undo, #redo {
 	display: inline-block;
 	box-sizing: border-box;
 	height: 40px;
@@ -111,8 +111,12 @@ nav {
 	cursor: pointer;
 }
 #clear {
-		margin-bottom: 20px;
 		background: #e53935;
+}
+#undo, #redo {
+	width: 44%;
+	margin-bottom: 20px;
+	background: #1976d2;
 }
 hr {
 	background: grey;
