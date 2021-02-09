@@ -4,7 +4,7 @@
 <p align="center">
 	<a href="https://img.shields.io/badge/maintainer-omgdahale-green"><img src="https://img.shields.io/badge/maintainer-omgdahale-green"></a>
 	<a href="https://img.shields.io/github/stars/omgdahale/davinci-paints"><img src="https://img.shields.io/github/stars/omgdahale/davinci-paints"></a>
-</p><br><br>
+</p><br>
 
 <p align="center"><img src="img/readme-gif.gif" width="500"></p><br>
 
