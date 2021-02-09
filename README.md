@@ -1,4 +1,4 @@
-<p align="center"><img src="img/logo.gif"></p>
+<p align="center"><img src="img/logo.png"></p>
 <h1 align="center">DaVinci Paints</h1>
 <p align="center">Minimalistic Painting Web App</p>
 <p align="center">
@@ -17,11 +17,11 @@ LINK: https://omgdahale.github.io/davinci-paints/
 ## :zap:  Features
 Some of the features of DaVinci Paints are:
 
-	- Responsive
-	- Minimal
-	- Colour picker support
-	- Increase brush width with 2 fingers
-	- Download as png
+ - Responsive
+ - Minimal
+ - Colour picker support
+ - Increase brush width with 2 fingers
+ - Download as png
 
 ## :clap: Supporters
 
@@ -32,4 +32,4 @@ Some of the features of DaVinci Paints are:
 [![Forkers repo roster for @omgdahale/davinci-paints](https://reporoster.com/forks/omgdahale/davinci-paints)](https://github.com/omgdahale/davinci-paints/network/members)
 <br>
 
-<p align="center"><a href="https://github.com/omgdahale/davinci-paints#"><img src="img/backToTop.png"></a></p>
+<p align="center"><a href="https://github.com/omgdahale/davinci-paints#"><img src="img/backToTop.png" height="29"></a></p>
