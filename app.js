@@ -29,7 +29,20 @@ window.onload = () => {
 
 	// adding color picker
 	let picker = document.querySelector("#picker");
-	let colorPicker = new iro.ColorPicker(picker, {layoutDirection:"horizontal"});
+	let colorPicker = new iro.ColorPicker(picker, {
+		layout: [
+			{
+				component: iro.ui.Box,
+			},
+			{
+				component: iro.ui.Slider,
+				options:{
+					sliderType:"hue",
+				}
+			}
+		],
+		layoutDirection:"horizontal"
+	});
 	colorPicker.display = "inline-block";
 	colorPicker.resize(200);
 
